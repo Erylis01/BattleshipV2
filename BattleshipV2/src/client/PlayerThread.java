@@ -41,8 +41,15 @@ public class PlayerThread extends Thread {
 				System.out.println("LE THREAD A BIEN RECUPERE LE HIT");
 				boolean touched = game.checkIfTouch(command.getPosX(), command.getPosY());
 				if (touched) {
-					sendTouched(command.getPosX(), command.getPosY());
-					game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
+					if (game.checkAllShipDeath()) {
+						sendMessage(new Command(Command.WIN, "Vous avez gagné!!!!"));
+						game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
+						game.displayText("Vous avez perdu!! Vous êtes vraiment trop nul...");
+						isDead=false;
+					} else {
+						sendTouched(command.getPosX(), command.getPosY());
+						game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
+					}
 				} else {
 					sendMissed(command.getPosX(), command.getPosY());
 					game.updateOpponentMissedCell(command.getPosX(), command.getPosY());
@@ -53,27 +60,20 @@ public class PlayerThread extends Thread {
 				break;
 			case Command.MISS:
 				game.updatePlayerMissedCell(command.getPosX(), command.getPosY());
-				System.out.println("LE THREAD A BIEN RECUPERE LA REPONSE");
+				System.out.println("LE THREAD A BIEN RECUPERE LE MISS");
 				game.displayText("Loupé ! Au tour adverse");
 				game.activeFrame();
 				break;
 			case Command.TOUCHED:
 				game.updatePlayerTouchedCell(command.getPosX(), command.getPosY());
-				if (game.checkAllShipDeath()) {
-					System.out.println("LE THREAD A BIEN RECUPERE LA REPONSE");
-					game.displayText("Vous avez perdu!! Vous êtes vraiment trop mauvais...");
-					sendMessage(new Command(Command.WIN, ""));
-					isDead = true;
-					// game.activeFrame();
-				} else {
-					System.out.println("LE THREAD A BIEN RECUPERE LA REPONSE");
-					game.displayText("Touché ! Au tour adverse");
-					game.activeFrame();
-				}
+				System.out.println("LE THREAD A BIEN RECUPERE LE TOUCHED");
+				game.displayText("Touché ! Au tour adverse");
+				game.activeFrame();
 				break;
 			case Command.WIN:
-				System.out.println("LE THREAD A BIEN RECUPERE LA REPONSE");
-				game.displayText("Vous avez gagné!!!!");
+				System.out.println("LE THREAD A BIEN RECUPERE LE WIN");
+				game.updatePlayerTouchedCell(command.getPosX(), command.getPosY());
+				game.displayText("Vous avez gangé!!!");
 				isDead = true;
 				break;
 			}

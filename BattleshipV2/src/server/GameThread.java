@@ -9,7 +9,7 @@ import java.util.Date;
 
 import metier.Command;
 
-public class PairThread extends Thread {
+public class GameThread extends Thread {
 
 	private Socket socket;
 	private ObjectOutputStream Output;
@@ -18,12 +18,12 @@ public class PairThread extends Thread {
 	private int uniqueid; // unique id easier to remove
 	private boolean inGame = false;
 	private String pseudo;
-	private PairThread opponentPairThread;
+	private GameThread opponentPairThread;
 	private boolean isItYourTurn;
 
 	private Command command;
 
-	public PairThread(Socket socket) {
+	public GameThread(Socket socket) {
 		this.setSocket(socket);
 		this.setUniqueid(Server.uniqueId++);
 		try {
@@ -75,7 +75,7 @@ public class PairThread extends Thread {
 				break;
 			case Command.WIN:
 				System.out.println("Le Win est recu niveau serveur");
-				opponentPairThread.sendMessage(new Command(Command.WIN, "Bravo vous avez gagné"));
+				opponentPairThread.sendMessage(new Command(Command.WIN, command.getPosX(), command.getPosY()));
 				isItYourTurn = false;
 				inGame = false;
 				break;
@@ -145,11 +145,11 @@ public class PairThread extends Thread {
 		this.socket = socket;
 	}
 
-	public PairThread getOpponentPairThread() {
+	public GameThread getOpponentPairThread() {
 		return opponentPairThread;
 	}
 
-	public void setOpponentPairThread(PairThread opponentPairThread) {
+	public void setOpponentPairThread(GameThread opponentPairThread) {
 		this.opponentPairThread = opponentPairThread;
 	}
 

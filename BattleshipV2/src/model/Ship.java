@@ -8,10 +8,12 @@ public class Ship {
 	private String[][] shipTable;
 	private int size;
 	private boolean isDead = false;
+	private String name;
 
-	public Ship(int size) {
+	public Ship(int size,String name) {
 		this.shipTable = new String[size][3];
 		this.size = size;
+		this.name=name;
 	}
 
 	public void updateShip(int box, int row, int col, String state) {
@@ -69,13 +71,14 @@ public class Ship {
 	public boolean checkDeath() {
 		int nbHit = 0;
 		for (int i = 0; i < shipTable.length; i++) {
-			if ("death".equals(shipTable[i][2])) {
+			if ("touched".equals(shipTable[i][2])) {
 				nbHit++;
 			}
 		}
 		if (nbHit == size) {
 			isDead = true;
 		}
+		System.out.println(name+" is sunk :"+isDead+" nbHit: "+nbHit);
 		return isDead;
 	}
 

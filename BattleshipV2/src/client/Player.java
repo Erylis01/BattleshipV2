@@ -93,11 +93,10 @@ public class Player {
 			}
 			switch (command.getType()) {
 			case Command.OKADVERSAIRE:
-				display(game, "Votre adversaire sera " + command.getMsg());
 				if (isItYourTurn) {
-					display(game, "\n C'est votre tour");
+					display(game, "Votre adversaire sera " + command.getMsg()+"\n C'est votre tour");
 				} else {
-					display(game, "\n C'est le tour de votre adversaire");
+					display(game, "Votre adversaire sera " + command.getMsg()+"\n C'est le tour de votre adversaire");
 				}
 				opponentFind = true;
 				break;

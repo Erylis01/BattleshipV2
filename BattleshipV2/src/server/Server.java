@@ -18,9 +18,9 @@ public class Server {
 	// date to display
 	private SimpleDateFormat date;
 	// ArrayList of clients
-	private ArrayList<PairThread> clients;
+	private ArrayList<GameThread> clients;
 	// ArrayList of clients
-	private static ArrayList<PairThread> waitingRoom;
+	private static ArrayList<GameThread> waitingRoom;
 	// the boolean that will be turned of to stop the server
 	private boolean keepGoing;
 	private InetAddress ip;
@@ -74,7 +74,7 @@ public class Server {
 				Socket socket = serverSocket.accept();
 				if (!keepGoing)
 					break;
-				PairThread pt = new PairThread(socket);
+				GameThread pt = new GameThread(socket);
 				pt.start();
 			} // I was asked to stop
 			try {
@@ -109,7 +109,7 @@ public class Server {
 	synchronized void remove(int id) {
 		// scan the array list until we found the Id
 		for (int i = 0; i < clients.size(); ++i) {
-			PairThread gt = clients.get(i);
+			GameThread gt = clients.get(i);
 			// found it
 			if (gt.getUniqueid() == id) {
 				clients.remove(i);
@@ -123,19 +123,19 @@ public class Server {
 		System.out.println(time);
 	}
 
-	public ArrayList<PairThread> getClients() {
+	public ArrayList<GameThread> getClients() {
 		return clients;
 	}
 
-	public void setClients(ArrayList<PairThread> clients) {
+	public void setClients(ArrayList<GameThread> clients) {
 		this.clients = clients;
 	}
 
-	public static ArrayList<PairThread> getWaitingRoom() {
+	public static ArrayList<GameThread> getWaitingRoom() {
 		return waitingRoom;
 	}
 
-	public void setWaitingRoom(ArrayList<PairThread> waitingRoom) {
+	public void setWaitingRoom(ArrayList<GameThread> waitingRoom) {
 		this.waitingRoom = waitingRoom;
 	}
 }

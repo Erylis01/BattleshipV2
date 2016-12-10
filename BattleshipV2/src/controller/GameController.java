@@ -21,11 +21,11 @@ public class GameController implements ActionListener {
 
 	// Variable pour création et placement des bateaux
 	private Ship[] listShip = new Ship[5];
-	private Ship carrier = new Ship(5);
-	private Ship battleship = new Ship(4);
-	private Ship cruiser = new Ship(3);
-	private Ship submarine = new Ship(3);
-	private Ship destroyer = new Ship(2);
+	private Ship carrier = new Ship(5,"porte-avion");
+	private Ship battleship = new Ship(4,"croiseur");
+	private Ship cruiser = new Ship(3,"contre-torpilleur");
+	private Ship submarine = new Ship(3,"sous-marin");
+	private Ship destroyer = new Ship(2,"torpilleur");
 	private String empty = "empty";
 	private int size = 0;
 	private boolean inCol = false;
