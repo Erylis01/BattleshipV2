@@ -41,14 +41,14 @@ public class PlayerThread extends Thread {
 				System.out.println("LE THREAD A BIEN RECUPERE LE HIT");
 				boolean touched = game.checkIfTouch(command.getPosX(), command.getPosY());
 				if (touched) {
+					game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
 					if (game.checkAllShipDeath()) {
-						sendMessage(new Command(Command.WIN, "Vous avez gagné!!!!"));
-						game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
+						sendMessage(new Command(Command.WIN, command.getPosX(), command.getPosY()));				
 						game.displayText("Vous avez perdu!! Vous êtes vraiment trop nul...");
-						isDead=false;
+						isDead=true;
+						break;						
 					} else {
 						sendTouched(command.getPosX(), command.getPosY());
-						game.updateOpponentTouchedCell(command.getPosX(), command.getPosY());
 					}
 				} else {
 					sendMissed(command.getPosX(), command.getPosY());
@@ -71,9 +71,15 @@ public class PlayerThread extends Thread {
 				game.activeFrame();
 				break;
 			case Command.WIN:
-				System.out.println("LE THREAD A BIEN RECUPERE LE WIN");
 				game.updatePlayerTouchedCell(command.getPosX(), command.getPosY());
-				game.displayText("Vous avez gangé!!!");
+				System.out.println("LE THREAD A BIEN RECUPERE LE WIN");
+				game.displayText("Vous avez gagné!!!");
+				try {
+					sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				isDead = true;
 				break;
 			}

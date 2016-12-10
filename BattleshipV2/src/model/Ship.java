@@ -78,7 +78,6 @@ public class Ship {
 		if (nbHit == size) {
 			isDead = true;
 		}
-		System.out.println(name+" is sunk :"+isDead+" nbHit: "+nbHit);
 		return isDead;
 	}
 
